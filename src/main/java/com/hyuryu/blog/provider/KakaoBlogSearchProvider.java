@@ -2,7 +2,9 @@ package com.hyuryu.blog.provider;
 
 import com.hyuryu.blog.model.BlogSearchResult;
 import com.hyuryu.blog.model.KakaoBlogSearchResponse;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.boot.web.client.RestTemplateBuilder;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpMethod;
@@ -17,8 +19,12 @@ import java.util.stream.Collectors;
 @Service
 public class KakaoBlogSearchProvider implements BlogSearchProvider {
     private final String kakaoAppKey = "5a974f2ab0be9781d788bacd9aff4184";
-    private final String apiUrl = "https://dapi.kakao.com/v2/search/blog";
-    private final RestTemplate restTemplate = new RestTemplate();
+    private String apiUrl = "https://dapi.kakao.com/v2/search/blog";
+    private RestTemplate restTemplate = new RestTemplate();
+
+    public void setRestTemplate(RestTemplate restTemplate) {
+        this.restTemplate = restTemplate;
+    }
 
     @Override
     public List<BlogSearchResult> search(String query, String sort, int page, int size) {
