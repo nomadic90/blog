@@ -23,9 +23,6 @@ public class KakaoBlogSearchProvider implements BlogSearchProvider {
 
     @Override
     public List<BlogSearchResult> search(String query, String sort, int page, int size) {
-        if (query.equals("gege")) {
-            throw new RuntimeException("wrong!");
-        }
         HttpHeaders headers = new HttpHeaders();
         headers.set("Authorization", "KakaoAK " + kakaoAppKey);
         String url = apiUrl + "?query=" + query + "&sort=" + sort + "&page=" + page + "&size=" + size;
