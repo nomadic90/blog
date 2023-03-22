@@ -17,12 +17,6 @@ import java.util.stream.Collectors;
 public class NaverBlogSearchProvider implements BlogSearchProvider {
     private static final String API_URL = "https://openapi.naver.com/v1/search/blog.json";
 
-//    @Value("${naver.client.id}")
-//    private String clientId;
-//
-//    @Value("${naver.client.secret}")
-//    private String clientSecret;
-
     private String clientId = "RkibhwwNPb3HRtaB7hAR";
     private String clientSecret = "3SyFZh8sgw";
 

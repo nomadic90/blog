@@ -11,7 +11,7 @@ import java.util.List;
 public class BlogSearchCountService {
     private SearchCountRepository searchCountRepository;
 
-    private static final long CACHE_EXPIRATION = 60 * 1000;
+    private static final long CACHE_EXPIRATION = 1000;
 
     private List<SearchCount> keywords;
     private long cacheExpireTime;

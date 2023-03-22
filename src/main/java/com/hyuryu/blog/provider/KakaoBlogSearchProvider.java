@@ -8,16 +8,15 @@ import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpMethod;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Component;
+import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 
 import java.util.List;
 import java.util.stream.Collectors;
 
-@Component
+@Service
 public class KakaoBlogSearchProvider implements BlogSearchProvider {
-//    private final String kakaoAppKey = "5a974f2ab0be9781d788bacd9aff4184";
-    @Value("${kakao.app.key}")
-    private String kakaoAppKey;
+    private final String kakaoAppKey = "5a974f2ab0be9781d788bacd9aff4184";
     private final String apiUrl = "https://dapi.kakao.com/v2/search/blog";
     private final RestTemplate restTemplate = new RestTemplate();
 
