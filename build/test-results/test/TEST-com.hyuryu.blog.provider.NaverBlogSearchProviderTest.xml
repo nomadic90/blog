@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite name="com.hyuryu.blog.provider.NaverBlogSearchProviderTest" tests="1" skipped="0" failures="0" errors="0" timestamp="2023-03-22T08:04:36" hostname="AL01972745.local" time="1.664">
+  <properties/>
+  <testcase name="네이버 블로그 검색 API 호출 테스트" classname="com.hyuryu.blog.provider.NaverBlogSearchProviderTest" time="1.664"/>
+  <system-out><![CDATA[]]></system-out>
+  <system-err><![CDATA[]]></system-err>
+</testsuite>

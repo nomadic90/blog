@@ -1,7 +1,0 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<testsuite name="com.hyuryu.blog.service.BlogSearchCountServiceTest" tests="1" skipped="0" failures="0" errors="0" timestamp="2023-03-22T07:46:29" hostname="AL01972745.local" time="1.793">
-  <properties/>
-  <testcase name="검색어 검색 횟수 증가 테스트" classname="com.hyuryu.blog.service.BlogSearchCountServiceTest" time="1.793"/>
-  <system-out><![CDATA[]]></system-out>
-  <system-err><![CDATA[]]></system-err>
-</testsuite>

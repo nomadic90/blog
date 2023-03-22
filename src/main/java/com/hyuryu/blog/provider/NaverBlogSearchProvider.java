@@ -20,9 +20,14 @@ public class NaverBlogSearchProvider implements BlogSearchProvider {
     private String clientId = "RkibhwwNPb3HRtaB7hAR";
     private String clientSecret = "3SyFZh8sgw";
 
+    private RestTemplate restTemplate = new RestTemplate();
+
+    public void setRestTemplate(RestTemplate restTemplate) {
+        this.restTemplate = restTemplate;
+    }
+
     @Override
     public List<BlogSearchResult> search(String query, String sort, int page, int size) {
-        RestTemplate restTemplate = new RestTemplate();
         HttpHeaders headers = new HttpHeaders();
         headers.set("X-Naver-Client-Id", clientId);
         headers.set("X-Naver-Client-Secret", clientSecret);
