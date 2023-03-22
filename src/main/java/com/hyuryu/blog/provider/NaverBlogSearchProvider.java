@@ -2,22 +2,26 @@ package com.hyuryu.blog.provider;
 
 import com.hyuryu.blog.model.BlogSearchResult;
 import com.hyuryu.blog.model.NaverBlogSearchResponse;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpMethod;
 import org.springframework.http.ResponseEntity;
-import org.springframework.stereotype.Component;
+import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 
 import java.util.List;
 import java.util.stream.Collectors;
 
-@Component
+@Service
 public class NaverBlogSearchProvider implements BlogSearchProvider {
     private static final String API_URL = "https://openapi.naver.com/v1/search/blog.json";
 
-    private String clientId = "RkibhwwNPb3HRtaB7hAR";
-    private String clientSecret = "3SyFZh8sgw";
+    @Value("${naver.client.id}")
+    private String clientId;
+
+    @Value("${naver.client.secret}")
+    private String clientSecret;
 
     private RestTemplate restTemplate = new RestTemplate();
 

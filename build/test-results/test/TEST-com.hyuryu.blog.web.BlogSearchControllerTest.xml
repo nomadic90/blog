@@ -1,8 +1,0 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<testsuite name="com.hyuryu.blog.web.BlogSearchControllerTest" tests="2" skipped="0" failures="0" errors="0" timestamp="2023-03-22T08:12:09" hostname="AL01972745.local" time="1.219">
-  <properties/>
-  <testcase name="testGetTopKeywords()" classname="com.hyuryu.blog.web.BlogSearchControllerTest" time="1.196"/>
-  <testcase name="testSearch()" classname="com.hyuryu.blog.web.BlogSearchControllerTest" time="0.02"/>
-  <system-out><![CDATA[]]></system-out>
-  <system-err><![CDATA[]]></system-err>
-</testsuite>

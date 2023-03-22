@@ -6,10 +6,12 @@ import com.hyuryu.blog.provider.NaverBlogSearchProvider;
 import com.hyuryu.blog.service.BlogSearchCountService;
 import com.hyuryu.blog.service.BlogSearchService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import javax.annotation.PostConstruct;
 import java.util.List;
 
 @RestController
@@ -17,10 +19,17 @@ public class BlogSearchController {
     @Autowired
     private BlogSearchCountService blogSearchCountService;
 
+    @Autowired
+    private KakaoBlogSearchProvider kakaoBlogSearchProvider;
+
+    @Autowired
+    private NaverBlogSearchProvider naverBlogSearchProvider;
+
     private BlogSearchService blogSearchService;
 
-    public BlogSearchController() {
-        this.blogSearchService = new BlogSearchService(List.of(new KakaoBlogSearchProvider(), new NaverBlogSearchProvider()));
+    @PostConstruct
+    public void init() {
+        this.blogSearchService = new BlogSearchService(List.of(kakaoBlogSearchProvider, naverBlogSearchProvider));
     }
 
     @GetMapping("/api/v1/search")

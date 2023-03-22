@@ -3,6 +3,7 @@ package com.hyuryu.blog.service;
 import com.hyuryu.blog.model.BlogSearchResult;
 import com.hyuryu.blog.provider.BlogSearchProvider;
 import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mockito;
 
@@ -24,6 +25,7 @@ class BlogSearchServiceTest {
     }
 
     @Test
+    @DisplayName("블로그 검색 테스트")
     public void searchTest() {
         List<BlogSearchResult> expectedResult = Arrays.asList(
                 new BlogSearchResult("Title 1", "URL 1", "t1", "d2"),

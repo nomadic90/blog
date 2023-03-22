@@ -2,6 +2,7 @@ package com.hyuryu.blog.provider;
 
 import com.hyuryu.blog.model.BlogSearchResult;
 import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.autoconfigure.web.client.RestClientTest;
 import org.springframework.boot.web.client.RestTemplateBuilder;
@@ -22,7 +23,6 @@ import static org.assertj.core.api.Assertions.assertThat;
 @RestClientTest(KakaoBlogSearchProvider.class)
 class KakaoBlogSearchProviderTest {
     private static final String API_URL = "https://dapi.kakao.com/v2/search/blog";
-    private static final String API_KEY = "5a974f2ab0be9781d788bacd9aff4184";
     private static final int PAGE = 1;
     private static final int SIZE = 10;
     private static final String QUERY = "springboot";
@@ -46,13 +46,13 @@ class KakaoBlogSearchProviderTest {
     }
 
     @Test
+    @DisplayName("카카오 블로그 검색 API 호출 테스트")
     void testSearch() {
         // given
         String responseBody = "{\"documents\":[{\"title\":\"Spring Boot Tutorial\",\"url\":\"https://www.example.com\",\"thumbnail\":\"https://www.example.com/thumb.jpg\",\"datetime\":\"2022-03-22T11:32:00\"}],\"meta\":{\"total_count\":1,\"pageable_count\":1,\"is_end\":true}}";
         HttpHeaders headers = new HttpHeaders();
         headers.setContentType(MediaType.APPLICATION_JSON);
         mockServer.expect(MockRestRequestMatchers.requestTo(API_URL + "?query=" + QUERY + "&sort=" + SORT + "&page=" + PAGE + "&size=" + SIZE))
-                .andExpect(MockRestRequestMatchers.header("Authorization", "KakaoAK " + API_KEY))
                 .andExpect(MockRestRequestMatchers.method(HttpMethod.GET))
                 .andRespond(MockRestResponseCreators.withSuccess(responseBody, MediaType.APPLICATION_JSON));
 
