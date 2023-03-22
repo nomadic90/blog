@@ -2,7 +2,6 @@ package com.hyuryu.blog.provider;
 
 import com.hyuryu.blog.model.BlogSearchResult;
 import com.hyuryu.blog.model.NaverBlogSearchResponse;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpMethod;
