@@ -21,8 +21,6 @@ import java.util.List;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-
-//@SpringBootTest(classes = {KakaoBlogSearchProvider.class, RestTemplateBuilder.class})
 @RestClientTest(KakaoBlogSearchProvider.class)
 class KakaoBlogSearchProviderTest {
     private static final String API_URL = "https://dapi.kakao.com/v2/search/blog";

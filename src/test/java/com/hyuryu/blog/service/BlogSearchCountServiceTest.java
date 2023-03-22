@@ -3,52 +3,63 @@ package com.hyuryu.blog.service;
 import com.hyuryu.blog.entity.SearchCount;
 import com.hyuryu.blog.repository.SearchCountRepository;
 import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
-import org.mockito.Mockito;
+import org.junit.jupiter.api.extension.ExtendWith;
+import org.mockito.InjectMocks;
+import org.mockito.Mock;
+import org.mockito.junit.jupiter.MockitoExtension;
 
-import java.util.Arrays;
+import java.util.Collections;
 import java.util.List;
+import java.util.stream.Collectors;
+import java.util.stream.IntStream;
 
-import static org.junit.jupiter.api.Assertions.*;
-import static org.mockito.ArgumentMatchers.any;
-import static org.mockito.ArgumentMatchers.anyString;
-import static org.mockito.Mockito.mock;
-import static org.mockito.Mockito.verify;
+import static org.mockito.BDDMockito.given;
+import static org.mockito.Mockito.*;
+import static org.assertj.core.api.Assertions.assertThat;
 
+@ExtendWith(MockitoExtension.class)
 class BlogSearchCountServiceTest {
-    private BlogSearchCountService blogSearchCountService;
+    @Mock
     private SearchCountRepository searchCountRepository;
 
-    @BeforeEach
-    public void setUp() {
-        searchCountRepository = mock(SearchCountRepository.class);
-        blogSearchCountService = new BlogSearchCountService(searchCountRepository);
+    @InjectMocks
+    private BlogSearchCountService blogSearchCountService;
+
+    @Test
+    @DisplayName("검색어 검색 횟수 증가 테스트")
+    void incrementSearchCountTest() {
+        // given
+        String keyword = "test";
+        given(searchCountRepository.findByKeyword(keyword)).willReturn(new SearchCount(keyword, 1));
+
+        // when
+        blogSearchCountService.incrementSearchCount(keyword);
+
+        // then
+        SearchCount searchCount = searchCountRepository.findByKeyword(keyword);
+        assertThat(searchCount.getCount()).isEqualTo(2);
+        assertThat(searchCount.getKeyword()).isEqualTo(keyword);
     }
 
     @Test
-    public void incrementSearchCountTest() {
-        SearchCount searchCount = new SearchCount("query", 1);
-        Mockito.when(searchCountRepository.findByKeyword(anyString())).thenReturn(null);
-        Mockito.when(searchCountRepository.save(any(SearchCount.class))).thenReturn(searchCount);
+    @DisplayName("상위 10개 검색어 조회 테스트")
+    void getTop10KeywordsTest() {
+        // given
+        List<SearchCount> searchCounts = IntStream.rangeClosed(1, 20)
+                .mapToObj(i -> new SearchCount("test" + i, i))
+                .collect(Collectors.toList());
+        given(searchCountRepository.findTop10ByOrderByCountDesc()).willReturn(searchCounts);
 
-        blogSearchCountService.incrementSearchCount("query");
+        // when
+        List<SearchCount> top10Keywords = blogSearchCountService.getTop10Keywords();
 
-        verify(searchCountRepository).findByKeyword("query");
-        verify(searchCountRepository).save(searchCount);
-    }
-
-    @Test
-    public void getTop10KeywordsTest() {
-        List<SearchCount> expectedResult = Arrays.asList(
-                new SearchCount("query1", 5),
-                new SearchCount("query2", 3)
-        );
-        Mockito.when(searchCountRepository.findTop10ByOrderByCountDesc()).thenReturn(expectedResult);
-
-        List<SearchCount> actualResult = blogSearchCountService.getTop10Keywords();
-
-        // Assert
-        assertEquals(expectedResult, actualResult);
-        verify(searchCountRepository).findTop10ByOrderByCountDesc();
+        // then
+        assertThat(top10Keywords.size()).isEqualTo(20);
+        assertThat(top10Keywords.get(0).getKeyword()).isEqualTo("test1");
+        assertThat(top10Keywords.get(0).getCount()).isEqualTo(1);
+        assertThat(top10Keywords.get(9).getKeyword()).isEqualTo("test10");
+        assertThat(top10Keywords.get(9).getCount()).isEqualTo(10);
     }
 }
