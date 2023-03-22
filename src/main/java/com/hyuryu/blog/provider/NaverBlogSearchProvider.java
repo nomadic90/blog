@@ -7,19 +7,24 @@ import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpMethod;
 import org.springframework.http.ResponseEntity;
+import org.springframework.stereotype.Component;
 import org.springframework.web.client.RestTemplate;
 
 import java.util.List;
 import java.util.stream.Collectors;
 
+@Component
 public class NaverBlogSearchProvider implements BlogSearchProvider {
-    private static final String API_URL = "https://openapi.naver.com/v1/search/blog";
+    private static final String API_URL = "https://openapi.naver.com/v1/search/blog.json";
 
-    @Value("${naver.client.id}")
-    private String clientId;
+//    @Value("${naver.client.id}")
+//    private String clientId;
+//
+//    @Value("${naver.client.secret}")
+//    private String clientSecret;
 
-    @Value("${naver.client.secret}")
-    private String clientSecret;
+    private String clientId = "RkibhwwNPb3HRtaB7hAR";
+    private String clientSecret = "3SyFZh8sgw";
 
     @Override
     public List<BlogSearchResult> search(String query, String sort, int page, int size) {
@@ -29,7 +34,13 @@ public class NaverBlogSearchProvider implements BlogSearchProvider {
         headers.set("X-Naver-Client-Secret", clientSecret);
         HttpEntity<String> entity = new HttpEntity<>("parameters", headers);
 
-        String url = API_URL + "?query=" + query + "&display=" + size + "&start=" + (page - 1) * size + "&sort=" + sort;
+        if (sort.equals("accuracy")) {
+            sort = "sim";
+        } else {
+            sort = "date";
+        }
+
+        String url = API_URL + "?query=" + query + "&display=" + size + "&start=" + page + "&sort=" + sort;
 
         ResponseEntity<NaverBlogSearchResponse> response = restTemplate.exchange(url, HttpMethod.GET, entity, NaverBlogSearchResponse.class);
         NaverBlogSearchResponse responseBody = response.getBody();
